@@ -1,5 +1,5 @@
 import { router } from "expo-router";
-import React, { useContext, useState } from "react";
+import React, { useCallback, useContext, useMemo, useState } from "react";
 import {
   FlatList,
   StyleSheet,
@@ -12,18 +12,37 @@ import { TaskContext } from "./_layout";
 import TaskItem from "./taskItem";
 
 export default function TrackerApp() {
+  console.log("tracker re rendered");
   const { tasks, setTasks } = useContext(TaskContext);
   const [search, setSearch] = useState("");
 
-  const deleteTask = (indexToDelete: number) => {
-    setTasks((prevTasks: string[]) =>
-      prevTasks.filter((item, currentIndex) => currentIndex !== indexToDelete),
+  const deleteTask = useCallback((indexToDelete: string) => {
+    setTasks((prevTasks: any[]) =>
+      prevTasks.filter((task) => task.id !== indexToDelete),
     );
-  };
+  }, []);
 
-  const filteredTasks = tasks.filter((task: string) =>
-    task.toLowerCase().includes(search.toLowerCase()),
-  );
+  const filteredTasks = useMemo(() => {
+    return tasks.filter((task: any) =>
+      task.title.toLowerCase().includes(search.toLowerCase()),
+    );
+  }, [tasks, search]);
+
+  const toggleTask = useCallback((idToToggle: string) => {
+    setTasks((prevTasks: any[]) =>
+      prevTasks.map((task) =>
+        task.id === idToToggle ? { ...task, completed: !task.completed } : task,
+      ),
+    );
+  }, []);
+
+  const editTask = useCallback((idToEdit: string, newTitle: string) => {
+    setTasks((prevTasks: any[]) =>
+      prevTasks.map((task) =>
+        task.id == idToEdit ? { ...task, title: newTitle } : task,
+      ),
+    );
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -43,12 +62,15 @@ export default function TrackerApp() {
       </View>
       <FlatList
         data={filteredTasks}
-        keyExtractor={(item, index) => index.toString()}
-        renderItem={({ item, index }) => (
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => (
           <TaskItem
-            title={item}
-            id={index}
-            deleteTask={() => deleteTask(index)}
+            title={item.title}
+            id={item.id}
+            completed={item.completed}
+            toggleTask={toggleTask}
+            deleteTask={deleteTask}
+            editTask={editTask}
           />
         )}
       />

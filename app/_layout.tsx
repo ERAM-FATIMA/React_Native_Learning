@@ -4,7 +4,9 @@ import React, { createContext, useState } from "react";
 export const TaskContext = createContext<any>(null);
 
 export default function Layout() {
-  const [tasks, setTasks] = useState(["My First Task"]);
+  const [tasks, setTasks] = useState([
+    { id: "1", title: "task", completed: false },
+  ]);
 
   return (
     <TaskContext.Provider value={{ tasks, setTasks }}>

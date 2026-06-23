@@ -10,12 +10,20 @@ import {
 import { TaskContext } from "./_layout";
 
 export default function addTask() {
+  console.log("Add task re rendered");
   const { tasks, setTasks } = useContext(TaskContext);
   const [inputText, setInputText] = useState("");
 
   const handleAddTask = () => {
-    if (inputText.trim() !== null) {
-      setTasks((prevTasks: string[]) => [...prevTasks, inputText.trim()]);
+    if (inputText.trim() !== "") {
+      setTasks((prevTasks: any[]) => [
+        ...prevTasks,
+        {
+          id: Date.now().toString(),
+          title: inputText.trim(),
+          completed: false,
+        },
+      ]);
     }
     router.back();
   };

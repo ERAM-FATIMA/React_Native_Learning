@@ -1,22 +1,69 @@
-import React from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import React, { useState } from "react";
+import {
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
 interface taskItemsProps {
   title: string;
-  id: number;
-  deleteTask: () => void;
+  id: string;
+  completed: boolean;
+  toggleTask: (id: string) => void;
+  deleteTask: (id: string) => void;
+  editTask: (id: string, newTitle: string) => void;
 }
 
-const TaskItem = ({ title, id, deleteTask }: taskItemsProps) => {
-  return (
-    <View style={styles.taskRow}>
-      <TouchableOpacity style={styles.checkButton} onPress={deleteTask}>
-        <Text>✅</Text>
-      </TouchableOpacity>
-      <Text style={styles.taskText}>{title}</Text>
-    </View>
-  );
-};
+const TaskItem = React.memo(
+  ({
+    title,
+    id,
+    completed,
+    toggleTask,
+    editTask,
+    deleteTask,
+  }: taskItemsProps) => {
+    const [isEditing, setIsEditing] = useState(false);
+    const [editText, setEditText] = useState(title);
 
+    const handleSave = () => {
+      editTask(id, editText);
+      setIsEditing(false);
+    };
+
+    return (
+      <View style={styles.taskRow}>
+        <TouchableOpacity
+          style={styles.checkButton}
+          onPress={() => toggleTask(id)}
+        >
+          <Text>{completed ? "⬛" : "✅"}</Text>
+        </TouchableOpacity>
+
+        {isEditing ? (
+          <TextInput
+            value={editText}
+            onChangeText={setEditText}
+            style={styles.taskText}
+            autoFocus
+          />
+        ) : (
+          <Text style={styles.taskText}>{title}</Text>
+        )}
+
+        <TouchableOpacity
+          style={styles.actionButton}
+          onPress={() => (isEditing ? handleSave() : setIsEditing(true))}
+        >
+          <Text style={styles.actionButtonText}>
+            {isEditing ? "Save" : "Edit"}
+          </Text>
+        </TouchableOpacity>
+      </View>
+    );
+  },
+);
 export default TaskItem;
 
 const styles = StyleSheet.create({
@@ -40,5 +87,16 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     justifyContent: "center",
     alignItems: "center",
+  },
+  actionButton: {
+    padding: 8,
+    marginLeft: 5,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  actionButtonText: {
+    color: "#598bc0",
+    fontSize: 14,
+    fontWeight: "600",
   },
 });
