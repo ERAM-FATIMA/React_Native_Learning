@@ -1,12 +1,23 @@
 import { Stack } from "expo-router";
 import React, { createContext, useState } from "react";
 
-export const TaskContext = createContext<any>(null);
+export type TaskStatus = "to-do" | "later" | "done";
+
+interface Task {
+  id: string;
+  title: string;
+  task_status: TaskStatus;
+}
+
+interface TaskContextType {
+  tasks: Task[];
+  setTasks: React.Dispatch<React.SetStateAction<Task[]>>;
+}
+
+export const TaskContext = createContext<TaskContextType | null>(null);
 
 export default function Layout() {
-  const [tasks, setTasks] = useState([
-    { id: "1", title: "task", completed: false },
-  ]);
+  const [tasks, setTasks] = useState<Task[]>([]);
 
   return (
     <TaskContext.Provider value={{ tasks, setTasks }}>
