@@ -17,7 +17,6 @@ export default function TrackerApp() {
     filteredTasks,
     search,
     setSearch,
-    toggleTask,
     deleteTask,
     editTask,
     inlineAddTask,
@@ -26,6 +25,7 @@ export default function TrackerApp() {
     todoCount,
     laterCount,
     doneCount,
+    updateTasks,
   } = useTasks();
 
   const [newTitle, setNewTitle] = useState("");
@@ -124,7 +124,7 @@ export default function TrackerApp() {
           onChangeText={setNewTitle}
           style={globalStyles.inlineInput}
           placeholderTextColor="#999"
-          onSubmitEditing={handleInlineSubmit} // Adds task when pressing 'Enter' on keyboard
+          onSubmitEditing={handleInlineSubmit}
         />
         {newTitle.trim() ? (
           <TouchableOpacity
@@ -143,11 +143,16 @@ export default function TrackerApp() {
             title={item.title}
             id={item.id}
             task_status={item.task_status}
-            toggleTask={toggleTask}
             deleteTask={deleteTask}
             editTask={editTask}
+            updateTask={updateTasks}
           />
         )}
+        ListEmptyComponent={
+          <View style={globalStyles.emptyContainer}>
+            <Text style={globalStyles.emptyText}>No tasks found!</Text>
+          </View>
+        }
       />
     </View>
   );

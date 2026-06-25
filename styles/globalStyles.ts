@@ -221,4 +221,60 @@ export const globalStyles = StyleSheet.create({
     borderRadius: spacing.radiusSmall,
     overflow: "hidden",
   },
+  backdrop: {
+    flex: 1,
+    backgroundColor: "rgba(15, 23, 42, 0.3)", // Translucent dimmed slate overlay
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  menuCard: {
+    width: "75%",
+    backgroundColor: colors.surface, // Automatically white
+    borderRadius: spacing.radiusLarge,
+    padding: 22,
+    alignItems: "center",
+    shadowColor: "#0F172A",
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.08,
+    shadowRadius: 6,
+    elevation: 6,
+  },
+  menuTitle: {
+    fontSize: 16,
+    fontWeight: "700",
+    marginBottom: 16,
+    color: colors.textDark, // Automatically Slate Dark
+  },
+  optionButton: {
+    width: "100%",
+    paddingVertical: 12,
+    alignItems: "flex-start",
+    borderBottomWidth: 1,
+    borderBottomColor: colors.background, // Clean subtle border split
+  },
+  optionText: {
+    fontSize: 15,
+    color: colors.textMuted, // Styled muted gray options
+  },
+  cancelButton: {
+    marginTop: 14,
+    paddingTop: 6,
+  },
+  cancelText: {
+    fontSize: 15,
+    color: colors.dangerText, // Links directly to your red text token
+    fontWeight: "600",
+  },
+  emptyContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    paddingVertical: 40,
+  },
+  emptyText: {
+    fontSize: 16,
+    color: colors.textMuted, // Styled muted gray for empty messages
+    fontWeight: "500",
+    textAlign: "center",
+  },
 });

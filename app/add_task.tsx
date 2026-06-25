@@ -4,7 +4,7 @@ import { Text, TextInput, TouchableOpacity, View } from "react-native";
 import { globalStyles } from "../styles";
 import { TaskContext } from "./_layout";
 
-export default function addTask() {
+export default function AddTask() {
   console.log("Add task re rendered");
   const { tasks, setTasks } = useContext(TaskContext)!;
   const [inputText, setInputText] = useState("");

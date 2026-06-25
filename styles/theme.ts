@@ -1,13 +1,13 @@
 export const DARK_THEME = {
   colors: {
-    background: "#121212",
-    surface: "#1E1E1E",
-    primary: "#7BB0E7",
-    secondaryBg: "#2A394A",
-    textDark: "#FFFFFF",
-    textMuted: "#A0A0A0",
-    dangerBg: "#3A1F1F",
-    dangerText: "#FF453A",
+    background: "#F8FAFC",
+    surface: "#FFFFFF",
+    primary: "#2563EB",
+    secondaryBg: "#E2E8F0",
+    textDark: "#0F172A",
+    textMuted: "#64748B",
+    dangerBg: "#FEE2E2",
+    dangerText: "#EF4444",
   },
   spacing: {
     paddingSmall: 8,

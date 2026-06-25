@@ -1,12 +1,6 @@
 import { useCallback, useContext, useMemo, useState } from "react";
 import { TaskContext, TaskStatus } from "./_layout";
 
-const next_status: Record<TaskStatus, TaskStatus> = {
-  "to-do": "done",
-  later: "to-do",
-  done: "to-do",
-};
-
 export default function useTasks() {
   const { tasks, setTasks } = useContext(TaskContext)!;
   const [search, setSearch] = useState("");
@@ -39,19 +33,6 @@ export default function useTasks() {
     return tasks.filter((t) => t.task_status == "done").length;
   }, [tasks]);
 
-  const toggleTask = useCallback((idToToggle: string) => {
-    setTasks((prevTasks) =>
-      prevTasks.map((task) =>
-        task.id === idToToggle
-          ? {
-              ...task,
-              task_status: task.task_status === "done" ? "to-do" : "done",
-            }
-          : task,
-      ),
-    );
-  }, []);
-
   const inlineAddTask = useCallback(
     (inputText: string) => {
       if (inputText.trim() !== "") {
@@ -76,12 +57,24 @@ export default function useTasks() {
     );
   }, []);
 
+  const updateTasks = useCallback(
+    (idToMove: string, newStatus: TaskStatus) => {
+      setTasks((prevTasks) =>
+        prevTasks.map((task) =>
+          task.id == idToMove ? { ...task, task_status: newStatus } : task,
+        ),
+      );
+
+      setActiveTab(newStatus);
+    },
+    [setTasks, setActiveTab],
+  );
+
   return {
     tasks,
     search,
     setSearch,
     filteredTasks,
-    toggleTask,
     deleteTask,
     editTask,
     inlineAddTask,
@@ -90,5 +83,6 @@ export default function useTasks() {
     doneCount,
     activeTab,
     setActiveTab,
+    updateTasks,
   };
 }
