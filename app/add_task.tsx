@@ -1,7 +1,6 @@
+import AddTaskScreen from "@/screens/AddTaskScreen";
 import { router } from "expo-router";
 import React, { useContext, useState } from "react";
-import { Text, TextInput, TouchableOpacity, View } from "react-native";
-import { globalStyles } from "../styles";
 import { TaskContext } from "./_layout";
 
 export default function AddTask() {
@@ -24,20 +23,10 @@ export default function AddTask() {
   };
 
   return (
-    <View style={globalStyles.container}>
-      <TextInput
-        placeholder="Add Task"
-        value={inputText}
-        onChangeText={setInputText}
-        style={globalStyles.input}
-        placeholderTextColor="#999"
-      />
-      <TouchableOpacity
-        style={globalStyles.primaryButton}
-        onPress={handleAddTask}
-      >
-        <Text style={globalStyles.primaryButtonText}>Save Task</Text>
-      </TouchableOpacity>
-    </View>
+    <AddTaskScreen
+      inputText={inputText}
+      setInputText={setInputText}
+      handleAddTask={handleAddTask}
+    />
   );
 }

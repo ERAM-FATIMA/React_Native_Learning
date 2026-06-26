@@ -4,7 +4,7 @@ import React, { createContext, useEffect, useState } from "react";
 
 export type TaskStatus = "to-do" | "later" | "done";
 
-interface Task {
+export interface Task {
   id: string;
   title: string;
   task_status: TaskStatus;

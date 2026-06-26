@@ -19,18 +19,18 @@ export default function useTasks() {
     return tasks.filter(
       (task) =>
         task.title.toLowerCase().includes(search.toLowerCase()) &&
-        task.task_status == activeTab,
+        task.task_status === activeTab,
     );
   }, [tasks, search, activeTab]);
 
   const todoCount = useMemo(() => {
-    return tasks.filter((t) => t.task_status == "to-do").length;
+    return tasks.filter((t) => t.task_status === "to-do").length;
   }, [tasks]);
   const laterCount = useMemo(() => {
-    return tasks.filter((t) => t.task_status == "later").length;
+    return tasks.filter((t) => t.task_status === "later").length;
   }, [tasks]);
   const doneCount = useMemo(() => {
-    return tasks.filter((t) => t.task_status == "done").length;
+    return tasks.filter((t) => t.task_status === "done").length;
   }, [tasks]);
 
   const inlineAddTask = useCallback(
@@ -61,13 +61,11 @@ export default function useTasks() {
     (idToMove: string, newStatus: TaskStatus) => {
       setTasks((prevTasks) =>
         prevTasks.map((task) =>
-          task.id == idToMove ? { ...task, task_status: newStatus } : task,
+          task.id === idToMove ? { ...task, task_status: newStatus } : task,
         ),
       );
-
-      setActiveTab(newStatus);
     },
-    [setTasks, setActiveTab],
+    [setTasks],
   );
 
   return {
